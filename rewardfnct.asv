@@ -1,0 +1,79 @@
+function handles = rewardfnct(handles,pos_array)
+    epsilon = 5;
+    remove_log = 0;
+   
+    if remove_log == 0
+        rew1 = handles.rew1;
+        lvl1_mat = handles.lvl1_mat;
+        for j = 1:size(lvl1_mat,2)
+            r = lvl1_mat(:,j);
+            test = pos_array > r*ones(1,size(pos_array,2))-epsilon*ones(3,size(pos_array,2)) & ...
+                pos_array < r*ones(1,size(pos_array,2))+epsilon*ones(3,size(pos_array,2));
+             logic = any(all(test));
+             if logic == 1
+                 remove_log = 1;
+                 handles.reward = handles.reward + rew1(j);
+                 lvl1_mat(:,j) = [];
+                 handles.rew1(j)=[];
+                 break
+             end
+        end
+        handles.lvl1_mat = lvl1_mat;
+    end
+    
+    if remove_log == 0
+        rew2 = handles.rew2;
+        lvl2_mat = handles.lvl2_mat;
+        for j = 1:size(lvl2_mat,2)
+            r = lvl2_mat(:,j);
+            test = pos_array > r*ones(1,size(pos_array,2))-epsilon*ones(3,size(pos_array,2)) & ...
+                pos_array < r*ones(1,size(pos_array,2))+epsilon*ones(3,size(pos_array,2));
+             logic = any(all(test));
+             if logic == 1
+                 remove_log = 1;
+                 handles.reward = handles.reward + rew2(j);
+                 lvl2_mat(:,j) = [];
+                 handles.rew2(j)=[];
+                 break
+             end
+        end
+        handles.lvl2_mat = lvl2_mat;
+    end
+    if remove_log == 0
+        rew3 = handles.rew3;
+        lvl3_mat = handles.lvl3_mat;
+        for j = 1:size(lvl3_mat,2)
+            r = lvl3_mat(:,j);
+            test = pos_array > r*ones(1,size(pos_array,2))-epsilon*ones(3,size(pos_array,2)) & ...
+                pos_array < r*ones(1,size(pos_array,2))+epsilon*ones(3,size(pos_array,2));
+             logic = any(all(test));
+             if logic == 1
+                 remove_log = 1;
+                 handles.reward = handles.reward + rew3(j);
+                 lvl3_mat(:,j) = [];
+                 handles.rew3(j)=[];
+                 break
+             end
+        end
+        handles.lvl3_mat = lvl3_mat;
+    end
+    if remove_log == 0
+        fuel  = handles.fuel;
+        fuel_pos = handles.fuel_pos;
+        for j = 1:size(lvl3_mat,2)
+            f = fuel_pos(2:3,j);
+            test = pos_array > f*ones(1,size(pos_array,2))-epsilon*ones(2,size(pos_array,2)) & ...
+                pos_array < f*ones(1,size(pos_array,2))+epsilon*ones(2,size(pos_array,2));
+             logic = any(all(test));
+             if logic == 1
+                 remove_log = 1;
+                 handles.fuel = handles.fuel + fuel(j);
+                 fuel(:,j) = [];
+                 handles.fuel(j)=[];
+                 break
+             end
+        end
+        handles.fuel = fuel;
+    end
+end
+    
